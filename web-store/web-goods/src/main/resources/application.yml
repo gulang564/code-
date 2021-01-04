@@ -1,0 +1,54 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.152.128:5432/postgres
+    username: postgres
+    password: postgres
+    # 初始化大小，最小，最大
+    initial-size: 5
+    min-idle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+  application:
+    name: webstore
+  thymeleaf:
+    cache: false
+
+  ###Redis
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 2000ms
+    password:
+
+    lettuce:
+      pool:
+        #最大连接数
+        max-active: 8
+        #最大阻塞等待时间(负数表示没限制)
+        max-wait: -1
+        #最大空闲
+        max-idle: 8
+        #最小空闲
+        min-idle: 0
+        #连接超时时间
+server:
+  port: 8002
+
+
+dubbo:
+  application:
+    name: goods
+  registry:
+    address: zookeeper://127.0.0.1:2181
+  protocol:
+    port: 20882
+    name: dubbo
+  scan:
+    base-packages: com.test.service

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+
+</head>
+<body>
+	<div th:fragment="goodsRight">
+
+			<form th:each="goods: ${goodsList}" th:action="@{/addCarServlet}" method="post" th:id="|${goods.id}form|">
+				<div class="col-sm-5 col-md-3">
+					<div class="thumbnail">
+						<img th:src="${goods.image}" alt="...">
+						<div class="caption">
+							<h3> <!-- Button trigger modal -->
+								<button type="button" th:id="|${goods.id}btn|" class="btn btn-link" style="color: red" data-toggle="modal" data-target="#my-modal-detail">
+										[[${goods.title}]]
+								</button></h3>
+
+							<input th:id="|${goods.id}text|" th:value="${goods.detail}" style="display: none">
+							<input  th:value="${goods.price}" name="price" style="display: none">
+							<input  th:value="${goods.id}" name="goods_id" style="display: none">
+							<input  th:value="${goods.typeid}" name="typeid" style="display: none">
+
+
+							<p class="col-md-offset-2">[[${goods.price}]]元/份</p>
+							<p class="col-md-offset-6">
+								<input class="btn btn-danger" th:id="|${goods.id}submit|" type="button" data-toggle="modal" data-target="#myModal" value="加入购物车">
+							</p>
+						</div>
+					</div>
+				</div>
+			</form>
+	</div>
+
+</body>
+
+</html>

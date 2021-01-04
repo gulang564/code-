@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+</head>
+<body>
+		<div th:fragment="left" class="list-group col-md-2">
+			<ul class="nav nav-stacked">
+				<li th:each="type:${goodTypes}" role="presentation" class="active"><a th:href="@{/showAllGoodsInfo(typeid=${type.type_id})}">[[${type.type_name}]]</a></li>
+			</ul>
+		</div>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title>首页</title>
+    <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap'+'@'+'3.3.7/dist/css/bootstrap.min.css'}" rel="stylesheet">
+  </head>
+
+  <body>
+  <div class="container">
+    <div style="height: 10px"></div>
+
+    <div th:replace="top::mytop"></div>
+
+    <div class="row">
+
+      <div th:replace="left::left"></div>
+
+     <!-- <%&#45;&#45;商品信息部分&#45;&#45;%>-->
+      <div class="col-md-10">
+
+        <div class="row">
+
+        <!--  <%&#45;&#45;若是购物车则使用 购物车的页面&#45;&#45;%>-->
+          <div th:if="${carDataList!=null}">
+            <div th:replace="carRight::carRight"></div>
+          </div>
+
+
+          <!--<%&#45;&#45;若是商品信息，这使用商品信息的页面&#45;&#45;%>-->
+          <div th:if="${goodsList!=null}">
+            <div th:replace="goodsRight::goodsRight"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="my-modal-detail" tabindex="-1" role="dialog" aria-labelledby="ModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">商品详情</h4>
+        </div>
+        <div id="showDetail" class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <p>是否提交</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button"  id="confirm" class="btn btn-primary">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </body>
+
+  <script  th:src="@{'https://cdn.jsdelivr.net/npm/jquery'+'@'+'1.12.4/dist/jquery.min.js'}"></script>
+  <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+  <script  th:src="@{'https://cdn.jsdelivr.net/npm/bootstrap'+'@'+'3.3.7/dist/js/bootstrap.min.js'}"></script>
+
+<script type="text/javascript" th:inline="none">
+  $(function () {
+    /*商品详情*/
+    $("h3 > button").on("click",function () {
+      console.log("进入click")
+      console.log(this.id)
+      $("#showDetail").text("");
+      let id = this.id;
+      let num= id.replace(/[^0-9]/ig,"");
+      let detail = num+"text"
+      let targetInput="input[id="+detail+"]"
+      let text= $(targetInput).val();
+      console.log($(targetInput))
+      console.log("text---->"+text)
+      $("#showDetail").text(text);
+    })
+
+   /* 提交警告*/
+    $("p > input").on("click",function () {
+      console.log("确认")
+      let id=	this.id
+      console.log(id);
+      let num= id.replace(/[^0-9]/ig,"");
+      let targetForm="#"+num+"form";
+
+      $("div .modal-footer > button").on("click",function () {
+        if (this.id=="confirm"){
+          console.log("=============>点击了确认按钮")
+          $(targetForm).submit();
+        }
+      })
+
+    })
+
+   /* /!*针对购物车的两个按钮*!/
+    $("#plus").on("click",function () {
+      console.log("点击了提交按钮+")
+      $("#flag").val(1)
+      $("orderForm").submit();
+    })
+
+    $("#desc").on("click",function () {
+      console.log("点击了提交按钮-")
+      $("#flag").val(0)
+      $("orderForm").submit();
+    })*/
+
+    /*针对购物车的两个按钮*/
+    $("button").on("click",function () {
+      let id=this.id;
+      let num= id.replace(/[^0-9]/ig,"");
+
+      let str=this.id+""
+
+
+       if (str.slice(0,4)=='plus'){
+         $("#input"+num).val(1);
+       }
+
+       if (str.slice(0,4)=='desc'){
+         $("#input"+num).val(0);
+       }
+
+       $("#orderForm"+num).submit();
+    })
+
+
+  })
+</script>
+</html>

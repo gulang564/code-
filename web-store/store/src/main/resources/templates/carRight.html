@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+
+</head>
+<body>
+<div th:fragment="carRight">
+
+		<table class="table table-hover">
+			<tr>
+				<td>订单号</td>
+				<td>用户名称</td>
+				<td>商品名称</td>
+				<td>商品单价</td>
+				<td>商品数量</td>
+				<td>购买时间</td>
+				<td>订单+1</td>
+				<td>订单-1</td>
+			</tr>
+
+			<form class="mytag" th:action="@{/updateOrder(order_id=${carData.order_id})}" method="post" th:id="|orderForm${carData.order_id}|" th:each =" carData : ${carDataList}" th:if="${carData.num > 0}">
+				<tr >
+					<td>[[${carData.order_id}]]</td>
+					<input type="text" name="order_id" hidden th:value="${carData.order_id}">
+					<td>[[${carData.u_name}]]</td>
+					<td>[[${carData.title}]]</td>
+					<td>[[${carData.price}]]</td>
+					<td>[[${carData.num}]]</td>
+					<td>[[${#dates.format(carData.creatTime,'yyyy-MM-dd HH:mm:ss')}]]</td>
+					<td><button type="button" th:id="|plus${carData.order_id}|" class="btn btn-success btn-sm" >添加</button></td>
+					<td><button type="button" th:id="|desc${carData.order_id}|" class="btn btn-danger btn-sm" >减少</button></td>
+					<input type="text" name="flag" th:id="|input${carData.order_id}|" hidden>
+				</tr>
+			</form>
+		</table>
+
+	<p style="font-size: 20px;color: red" class="navbar-text navbar-right"><span class="glyphicon glyphicon-yen" aria-hidden="true"></span>: [[${total}]] 元 </p>
+</div>
+
+</body>
+<script>
+
+
+</script>
+</html>
