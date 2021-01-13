@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://192.168.152.128:5432/postgres
+    username: postgres
+    password: postgres
+    # 初始化大小，最小，最大
+    initial-size: 5
+    min-idle: 5
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 300000
+    platform: postgres
+    driver-class-name: org.postgresql.Driver
+  application:
+    name: order-provider
+  thymeleaf:
+    cache: false
+
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+server:
+  port: 8004
+
+
+dubbo:
+  application:
+    name: order
+  registry:
+    address: nacos://127.0.0.1:8848
+  protocol:
+    port: -1
+    name: dubbo
+  scan:
+    base-packages: com.test.service
