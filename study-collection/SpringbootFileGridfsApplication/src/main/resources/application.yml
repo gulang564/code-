@@ -1,0 +1,18 @@
+server:
+  port: 8080
+  address: localhost
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/test1
+      database: test1
+
+  servlet:
+    #大文件上传，玩的打大一点 /
+    multipart:
+      max-file-size: 1024MB
+      max-request-size: 1024MB
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
